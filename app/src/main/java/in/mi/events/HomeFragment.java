@@ -2,6 +2,7 @@ package in.mi.events;
 
 
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -24,6 +25,7 @@ public class HomeFragment extends Fragment {
     private EventAdapter eventAdapter;
     private ArrayList<Event> events;
 
+
     public HomeFragment() {
         // Required empty public constructor
     }
@@ -36,23 +38,38 @@ public class HomeFragment extends Fragment {
         View rootView =  inflater.inflate( R.layout.fragment_home,
                 container,
                 false );
+        MainActivity.fab.setVisibility( View.VISIBLE );
 
         recyclerView=rootView.findViewById( R.id.evnetsList );
         recyclerView.setHasFixedSize( true );
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
         recyclerView.setLayoutManager( layoutManager );
         events = new ArrayList<>(  );
-        events.add( new Event( "Meeting",
-                "Mihir",
-                "Today is senate meeting under mihir" ));
-        events.add( new Event( "Game",
-                "Mihir",
-                "Today is Final day of India vs South Africa Test Match" ));
+
+        //Load new event
+        loadNewEvent();
+
+
+
         eventAdapter = new EventAdapter( events );
 
         recyclerView.setAdapter( eventAdapter );
 
         return rootView;
+    }
+
+    private void loadNewEvent() {
+        if(getArguments() != null){
+            String title, author, description, imageUri;
+
+            title = getArguments().getString( "TITLE" );
+            author = "Mihir";
+            description = getArguments().getString( "DESCRIPTION");
+            imageUri = getArguments().getString( "IMAGE_URI" );
+
+            Event event = new Event( title, author, description, imageUri) ;
+            events.add( event );
+        }
     }
 
 }

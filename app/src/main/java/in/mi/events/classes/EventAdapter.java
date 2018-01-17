@@ -1,5 +1,6 @@
 package in.mi.events.classes;
 
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,6 +37,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventHolder> {
         holder.title.setText( events.get( position ).getTitle() );
         holder.author.setText( events.get( position ).getAuthor() );
         holder.description.setText( events.get( position ).getDescription() );
+        holder.srcImage.setImageURI( Uri.parse(events.get(position).getImageUri()) );
 
     }
 

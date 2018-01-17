@@ -19,8 +19,8 @@ public class MainActivity extends AppCompatActivity implements
     private ActionBarDrawerToggle actionBarDrawerToggle;
     NavigationView mNavigationView;
     FragmentTransaction fragmentTransaction;
-    FloatingActionButton fab;
-
+    public static FloatingActionButton fab;
+    HomeFragment homeFragment;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate( savedInstanceState );
@@ -33,16 +33,17 @@ public class MainActivity extends AppCompatActivity implements
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         mNavigationView = findViewById(R.id.navigation_view);
         fab = findViewById( R.id.fab );
+        homeFragment = new HomeFragment();
 
         fab.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 fragmentTransaction = getSupportFragmentManager().beginTransaction();
                 fragmentTransaction.replace( R.id.frame,new AddFragment() ).commit();
-
                 fab.setVisibility( View.GONE );
             }
         } );
+
 
         if (mNavigationView != null) {
             mNavigationView.setNavigationItemSelectedListener(this);
@@ -52,8 +53,9 @@ public class MainActivity extends AppCompatActivity implements
         //setting default screen
         mNavigationView.setCheckedItem( R.id.home );
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frame, new HomeFragment());
+        transaction.replace(R.id.frame, homeFragment);
         transaction.commit();
+
 
     }
 
@@ -77,4 +79,6 @@ public class MainActivity extends AppCompatActivity implements
 
 
     }
+
+
 }

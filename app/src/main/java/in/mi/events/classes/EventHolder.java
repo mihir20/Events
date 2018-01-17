@@ -14,7 +14,7 @@ import in.mi.events.R;
 public class EventHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
     TextView title,author, description;
-    ImageView imageView;
+    ImageView imageView,srcImage;
 
     public EventHolder(View itemView) {
         super( itemView );
@@ -24,6 +24,7 @@ public class EventHolder extends RecyclerView.ViewHolder implements View.OnClick
         imageView = itemView.findViewById( R.id.eventLikedImageID );
         imageView.setTag( R.drawable.ic_favorite_black_24dp);
         imageView.setImageResource( R.drawable.ic_favorite_black_24dp );
+        srcImage = itemView.findViewById( R.id.eventImageID );
         itemView.setOnClickListener( this );
     }
 
