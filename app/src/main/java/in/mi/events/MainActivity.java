@@ -1,6 +1,7 @@
 package in.mi.events;
 
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
@@ -18,6 +19,7 @@ public class MainActivity extends AppCompatActivity implements
     private ActionBarDrawerToggle actionBarDrawerToggle;
     NavigationView mNavigationView;
     FragmentTransaction fragmentTransaction;
+    FloatingActionButton fab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +32,17 @@ public class MainActivity extends AppCompatActivity implements
         actionBarDrawerToggle.syncState();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         mNavigationView = findViewById(R.id.navigation_view);
+        fab = findViewById( R.id.fab );
+
+        fab.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.replace( R.id.frame,new AddFragment() ).commit();
+
+                fab.setVisibility( View.GONE );
+            }
+        } );
 
         if (mNavigationView != null) {
             mNavigationView.setNavigationItemSelectedListener(this);
@@ -51,6 +64,11 @@ public class MainActivity extends AppCompatActivity implements
             case R.id.home:
                 fragmentTransaction = getSupportFragmentManager().beginTransaction();
                 fragmentTransaction.replace( R.id.frame,new HomeFragment() ).commit();
+                drawerLayout.closeDrawers();
+                return true;
+            case R.id.sighOut:
+                fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.replace( R.id.frame,new AddFragment() ).commit();
                 drawerLayout.closeDrawers();
                 return true;
             default:
