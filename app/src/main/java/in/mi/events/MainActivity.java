@@ -20,11 +20,15 @@ public class MainActivity extends AppCompatActivity implements
     NavigationView mNavigationView;
     FragmentTransaction fragmentTransaction;
     public static FloatingActionButton fab;
+    public static String USER_EMAIL ;
     HomeFragment homeFragment;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate( savedInstanceState );
         setContentView( R.layout.activity_main );
+
+        //setting user
+        USER_EMAIL = getIntent().getExtras().getString( "EMAIL" );
 
         drawerLayout= findViewById(R.id.drawer);
         actionBarDrawerToggle = new ActionBarDrawerToggle(this,drawerLayout,R.string.open,R.string.close);

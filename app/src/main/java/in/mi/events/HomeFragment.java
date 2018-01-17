@@ -14,6 +14,7 @@ import java.util.ArrayList;
 
 import in.mi.events.classes.Event;
 import in.mi.events.classes.EventAdapter;
+import in.mi.events.databases.EventsDatabaseHelper;
 
 
 /**
@@ -24,7 +25,9 @@ public class HomeFragment extends Fragment {
     private RecyclerView recyclerView;
     private EventAdapter eventAdapter;
     private ArrayList<Event> events;
+    private EventsDatabaseHelper databaseHelper;
 
+    private String user;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -39,16 +42,20 @@ public class HomeFragment extends Fragment {
                 container,
                 false );
         MainActivity.fab.setVisibility( View.VISIBLE );
+        user = MainActivity.USER_EMAIL;
 
+        databaseHelper = new EventsDatabaseHelper( this.getContext() );
         recyclerView=rootView.findViewById( R.id.evnetsList );
         recyclerView.setHasFixedSize( true );
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
         recyclerView.setLayoutManager( layoutManager );
         events = new ArrayList<>(  );
 
-        //Load new event
-        loadNewEvent();
+        //save new event
+        saveNewEventToDatabse();
 
+        //load events from database
+        loadEventsFromDatabase();
 
 
         eventAdapter = new EventAdapter( events );
@@ -58,17 +65,21 @@ public class HomeFragment extends Fragment {
         return rootView;
     }
 
-    private void loadNewEvent() {
+    private void loadEventsFromDatabase() {
+        events = databaseHelper.getAllEvents();
+    }
+
+    private void saveNewEventToDatabse() {
         if(getArguments() != null){
             String title, author, description, imageUri;
 
             title = getArguments().getString( "TITLE" );
-            author = "Mihir";
+            author = user;
             description = getArguments().getString( "DESCRIPTION");
             imageUri = getArguments().getString( "IMAGE_URI" );
 
             Event event = new Event( title, author, description, imageUri) ;
-            events.add( event );
+            databaseHelper.addEvent( event );
         }
     }
 
